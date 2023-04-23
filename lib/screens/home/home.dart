@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:init/network/cient_view.dart';
 import 'package:init/screens/contractors/contractors.dart';
 import 'package:init/screens/login/login_page.dart';
 import 'package:init/screens/login/login_view.dart';

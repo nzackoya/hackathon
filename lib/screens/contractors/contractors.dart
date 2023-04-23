@@ -35,8 +35,44 @@ class _ContractorsState extends ConsumerState<Contractors> {
               ),
               const Icon(Icons.filter_list)
             ],
-          ),
+          )
         ),
+      ),
+      body: ListView.separated(
+        itemCount: 20,
+        itemBuilder: (context, index) {
+          return SizedBox(
+            height: 150,
+            child: Card(
+              elevation: 8,
+              child: Padding(padding: EdgeInsets.all(10), child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text("Подрядчик ${index + 1}",  textAlign: TextAlign.center, style: InitStyle.textSemiBold20Neutral1000,),
+                  SizedBox(height: 10,),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 80, width: 80, child: Image.asset("assets/contractors/${index + 1}.png")),
+                      SizedBox(width: 10,),
+                      Expanded(child: Text("Подрядчик ${index + 1}, Современные технологии достигли такого уровня, что глубокий уровень погружения предоставляет широкие возможности для системы обучения кадров, соответствующей насущным потребностям. Кстати, действия представителей оппозиции превращены в посмешище, хотя само их существование приносит несомненную пользу обществу! Господа, базовый вектор развития представляет собой интересный эксперимент проверки системы массового участия.",
+                        textAlign: TextAlign.left,
+                        style: InitStyle.textMedium12Neutral500,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 6,
+                      ))
+                    ],
+                  ),
+                ],
+              )),
+            )
+          );
+        },
+        separatorBuilder: (context, index) {
+
+          return const SizedBox(height: 10,);
+        },
       ),
     );
   }
