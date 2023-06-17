@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hack/home_3d.dart';
+import 'package:hack/home_comfort.dart';
+import 'package:hack/login.dart';
 
 import 'home.dart';
 
@@ -15,6 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -92,81 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     isScrollControlled: true,
                     backgroundColor: Colors.transparent,
                     builder: (context) {
-                      return SafeArea(
-                        child: Container(
-                            margin: EdgeInsets.only(
-                              top: 100,
-                            ),
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(8)),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Expanded(child: SizedBox()),
-                                    Expanded(
-                                        child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 16),
-                                            child: SizedBox(
-                                                width: 36,
-                                                height: 4,
-                                                child: FittedBox(
-                                                    child: Container(
-                                                  width: 36,
-                                                  height: 4,
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                          color: Colors.black87,
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          4))),
-                                                ))))),
-                                    Expanded(
-                                        child: IconButton(
-                                            alignment:
-                                                AlignmentDirectional.centerEnd,
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            icon: const Icon(Icons.close)))
-                                  ],
-                                ),
-                                const SizedBox(
-                                  width: 200,
-                                  height: 75,
-                                  child: TextField(
-                                    decoration:
-                                        InputDecoration(hintText: "Логин"),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 200,
-                                  height: 75,
-                                  child: TextField(
-                                    obscureText: true,
-                                    decoration:
-                                        InputDecoration(hintText: "Пароль"),
-                                  ),
-                                ),
-                                ElevatedButton(
-                                  style: ButtonStyle(
-                                      foregroundColor:
-                                          MaterialStateProperty.all(
-                                              Colors.deepPurpleAccent)),
-                                  onPressed: () {},
-                                  child: const Text('Войти'),
-                                ),
-                              ],
-                            )),
-                      );
+                      return const Login();
                     });
               },
               icon: const Icon(Icons.person))
@@ -175,9 +104,10 @@ class _MyHomePageState extends State<MyHomePage> {
       body: PageView(
         controller: _pageController,
         physics: const NeverScrollableScrollPhysics(),
-        children: const [Home(), Home3D()],
+        children: const [Home(), Home3D(), HomeComfort()],
       ),
       bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
           onTap: (index) async {
             await _pageController?.animateToPage(index,
                 duration: const Duration(milliseconds: 100),
@@ -186,9 +116,11 @@ class _MyHomePageState extends State<MyHomePage> {
           },
           items: const [
             BottomNavigationBarItem(
-                label: 'Прогроз', icon: Icon(Icons.access_time)),
+                label: 'Прогноз', icon: Icon(Icons.access_time)),
             BottomNavigationBarItem(
                 label: '3D Прогноз', icon: Icon(Icons.home_work_outlined)),
+            BottomNavigationBarItem(
+                label: 'Индекс комфорта', icon: Icon(Icons.chair_outlined)),
           ]),
     );
   }

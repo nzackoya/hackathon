@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
-import 'dart:math' as math;
-
-import 'map_zoom_buttons.dart';
 
 const List<String> list = <String>[
   'Все',
@@ -21,17 +16,9 @@ class Home3D extends StatefulWidget {
 }
 
 class _Home3DState extends State<Home3D> {
-  Map<LatLng, Color> pointsData = {};
-  bool isSatellite = false;
-
-  String dropdownValue = list.first;
   double _currentSliderValue = 2023;
 
-  @override
-  void initState() {
-    generatePointsData();
-    super.initState();
-  }
+  // Map<double, String> data =
 
   @override
   Widget build(BuildContext context) {
@@ -40,112 +27,9 @@ class _Home3DState extends State<Home3D> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
-            child: FlutterMap(
-          options: MapOptions(
-            interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate,
-            center: LatLng(45.036349, 38.974551),
-            zoom: 6.5,
-          ),
-          nonRotatedChildren: [
-            Align(
-              alignment: Alignment.topRight,
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isSatellite = !isSatellite;
-                  });
-                },
-                child: Container(
-                  margin: const EdgeInsets.all(10),
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(4)),
-                    border: Border.all(
-                      color: Colors.white,
-                      width: 2,
-                    ),
-                  ),
-                  child: TileLayer(
-                    urlTemplate:
-                        "https://api.mapbox.com/styles/v1/mapbox/{styleId}/tiles/512/{z}/{x}/{y}@2x?access_token={accessToken}",
-                    additionalOptions: {
-                      "accessToken":
-                          "pk.eyJ1Ijoibnpha295YSIsImEiOiJjbGl6dHRzaWQwcTFvM2lxcXJ5dWJ4a212In0.VxYqYQWT0bAVKk2TVGtJAQ",
-                      "styleId": isSatellite ? "streets-v12" : "satellite-v9"
-                    },
-                  ),
-                ),
-              ),
-            ),
-            Align(
-                alignment: Alignment.topLeft,
-                child: Container(
-                  margin: const EdgeInsets.all(10),
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20)),
-                  child: DropdownButton<String>(
-                    value: dropdownValue,
-                    icon: const Icon(Icons.arrow_downward),
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.deepPurple),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.deepPurpleAccent,
-                    ),
-                    onChanged: (String? value) {
-                      // This is called when the user selects an item.
-                      setState(() {
-                        dropdownValue = value!;
-                      });
-                    },
-                    items: list.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
-                )),
-            const Positioned(
-                right: 12,
-                top: 70,
-                child: FlutterMapZoomButtons(
-                  maxZoom: 12.5,
-                  zoomInColor: Colors.white,
-                  zoomOutColor: Colors.white,
-                  zoomOutIcon: Icons.remove,
-                  zoomInIcon: Icons.add,
-                  padding: 0,
-                  mini: true,
-                  alignment: Alignment.topRight,
-                )),
-          ],
-          children: [
-            TileLayer(
-              urlTemplate:
-                  "https://api.mapbox.com/styles/v1/mapbox/{styleId}/tiles/512/{z}/{x}/{y}@2x?access_token={accessToken}",
-              additionalOptions: {
-                "accessToken":
-                    "pk.eyJ1Ijoibnpha295YSIsImEiOiJjbGl6dHRzaWQwcTFvM2lxcXJ5dWJ4a212In0.VxYqYQWT0bAVKk2TVGtJAQ",
-                "styleId": isSatellite ? "satellite-v9" : "streets-v12"
-              },
-            ),
-            MarkerLayer(
-                markers: pointsData.entries
-                    .map((entry) => Marker(
-                          point: getRandomLocation(entry.key, 5000),
-                          width: 30,
-                          height: 30,
-                          builder: (context) => Container(
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle, color: entry.value),
-                          ),
-                        ))
-                    .toList())
-          ],
+            child: Image.asset(
+          'assets/images/${getImage()}.jpeg',
+          fit: BoxFit.fitHeight,
         )),
         Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -153,7 +37,7 @@ class _Home3DState extends State<Home3D> {
               const Text('2023'),
               Expanded(
                   child: Slider(
-                divisions: 27,
+                divisions: 6,
                 value: _currentSliderValue,
                 min: 2023,
                 max: 2050,
@@ -170,41 +54,21 @@ class _Home3DState extends State<Home3D> {
     ));
   }
 
-  LatLng getRandomLocation(LatLng point, int radius) {
-    //This is to generate 10 random points
-    double x0 = point.latitude;
-    double y0 = point.longitude;
-
-    math.Random random = math.Random();
-
-    // Convert radius from meters to degrees
-    double radiusInDegrees = radius / 111000;
-
-    double u = random.nextDouble();
-    double v = random.nextDouble();
-    double w = radiusInDegrees * math.sqrt(u);
-    double t = 2 * pi * v;
-    double x = w * math.cos(t);
-    double y = w * math.sin(t) * 1.75;
-
-    // Adjust the x-coordinate for the shrinking of the east-west distances
-    double new_x = x / math.sin(y0);
-
-    double foundLatitude = new_x + x0;
-    double foundLongitude = y + y0;
-    LatLng randomLatLng = new LatLng(foundLatitude, foundLongitude);
-
-    return randomLatLng;
-  }
-
-  generatePointsData() {
-    pointsData = {
-      for (var index in List.generate(100, (index) => index))
-        getRandomLocation(LatLng(45.036349, 38.974551), 5000): Color.fromRGBO(
-            math.Random().nextInt(255), math.Random().nextInt(255), 0, 0.5)
-    };
-    if (mounted) {
-      setState(() {});
+  int getImage() {
+    if (_currentSliderValue == 2050) {
+      return 7;
+    } else if (_currentSliderValue == 2046) {
+      return 6;
+    } else if (_currentSliderValue == 2041) {
+      return 5;
+    } else if (_currentSliderValue == 2037) {
+      return 4;
+    } else if (_currentSliderValue == 2032) {
+      return 3;
+    } else if (_currentSliderValue == 2028) {
+      return 2;
+    } else {
+      return 1;
     }
   }
 }

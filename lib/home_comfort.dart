@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:hack/filter.dart';
 import 'package:latlong2/latlong.dart';
 import 'dart:math' as math;
 
@@ -13,19 +14,18 @@ const List<String> list = <String>[
   'Транспорт'
 ];
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class HomeComfort extends StatefulWidget {
+  const HomeComfort({Key? key}) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  _HomeComfortState createState() => _HomeComfortState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeComfortState extends State<HomeComfort> {
   Map<LatLng, Color> pointsData = {};
   bool isSatellite = false;
 
   String dropdownValue = list.first;
-  double _currentSliderValue = 2023;
 
   @override
   void initState() {
@@ -80,35 +80,26 @@ class _HomeState extends State<Home> {
             ),
             Align(
                 alignment: Alignment.topLeft,
-                child: Container(
-                  margin: const EdgeInsets.all(10),
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20)),
-                  child: DropdownButton<String>(
-                    value: dropdownValue,
-                    icon: const Icon(Icons.arrow_downward),
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.deepPurple),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.deepPurpleAccent,
-                    ),
-                    onChanged: (String? value) {
-                      // This is called when the user selects an item.
-                      setState(() {
-                        dropdownValue = value!;
-                      });
-                    },
-                    items: list.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
-                )),
+                child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: FloatingActionButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                      ),
+                      mini: true,
+                      backgroundColor: Colors.white,
+                      onPressed: () async {
+                        await showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            builder: (context) {
+                              return const Filter();
+                            });
+                        setState(() {});
+                      },
+                      child: const Icon(Icons.filter_list_outlined),
+                    ))),
             const Positioned(
                 right: 12,
                 top: 70,
@@ -146,26 +137,7 @@ class _HomeState extends State<Home> {
                         ))
                     .toList())
           ],
-        )),
-        Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(children: [
-              const Text('2023'),
-              Expanded(
-                  child: Slider(
-                divisions: 27,
-                value: _currentSliderValue,
-                min: 2023,
-                max: 2050,
-                label: _currentSliderValue.round().toString(),
-                onChanged: (double value) {
-                  setState(() {
-                    _currentSliderValue = value;
-                  });
-                },
-              )),
-              const Text('2050')
-            ]))
+        ))
       ],
     ));
   }
