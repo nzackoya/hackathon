@@ -16,7 +16,7 @@ class Home3D extends StatefulWidget {
 }
 
 class _Home3DState extends State<Home3D> {
-  double _currentSliderValue = 2023;
+  int _currentSliderValue = 2023;
 
   // Map<double, String> data =
 
@@ -38,13 +38,13 @@ class _Home3DState extends State<Home3D> {
               Expanded(
                   child: Slider(
                 divisions: 6,
-                value: _currentSliderValue,
+                value: _currentSliderValue.toDouble(),
                 min: 2023,
                 max: 2050,
                 label: _currentSliderValue.round().toString(),
                 onChanged: (double value) {
                   setState(() {
-                    _currentSliderValue = value;
+                    _currentSliderValue = value.round();
                   });
                 },
               )),
