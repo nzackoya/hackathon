@@ -63,6 +63,12 @@ class _FilterState extends State<Filter> {
                       child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Фильтрация',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )),
                   const Padding(
                       padding: EdgeInsets.only(top: 10, left: 10, right: 10),
                       child: Text(
