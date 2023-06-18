@@ -63,7 +63,7 @@ class _FilterState extends State<Filter> {
                       child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Align(
+                  const Align(
                       alignment: Alignment.center,
                       child: Text(
                         'Фильтрация',
@@ -88,6 +88,7 @@ class _FilterState extends State<Filter> {
                       ),
                       Expanded(
                           child: Slider(
+                        activeColor: Color(0xff8098FE),
                         divisions: 100,
                         value: schoolValue,
                         max: 100,
@@ -119,6 +120,7 @@ class _FilterState extends State<Filter> {
                       ),
                       Expanded(
                           child: Slider(
+                        activeColor: Color(0xff8098FE),
                         divisions: 100,
                         value: kinderValue,
                         max: 100,
@@ -150,6 +152,7 @@ class _FilterState extends State<Filter> {
                       ),
                       Expanded(
                           child: Slider(
+                        activeColor: Color(0xff8098FE),
                         divisions: 100,
                         value: hospitalValue,
                         max: 100,
@@ -181,6 +184,7 @@ class _FilterState extends State<Filter> {
                       ),
                       Expanded(
                           child: Slider(
+                        activeColor: Color(0xff8098FE),
                         divisions: 100,
                         value: parkValue,
                         max: 100,
@@ -212,6 +216,7 @@ class _FilterState extends State<Filter> {
                       ),
                       Expanded(
                           child: Slider(
+                        activeColor: Color(0xff8098FE),
                         divisions: 100,
                         value: mallValue,
                         max: 100,
@@ -243,6 +248,7 @@ class _FilterState extends State<Filter> {
                       ),
                       Expanded(
                           child: Slider(
+                        activeColor: Color(0xff8098FE),
                         divisions: 100,
                         value: marketValue,
                         max: 100,
@@ -274,6 +280,7 @@ class _FilterState extends State<Filter> {
                       ),
                       Expanded(
                           child: Slider(
+                        activeColor: Color(0xff8098FE),
                         divisions: 100,
                         value: transportValue,
                         max: 100,
@@ -292,8 +299,9 @@ class _FilterState extends State<Filter> {
                   alignment: Alignment.center,
                   child: ElevatedButton(
                     style: ButtonStyle(
-                        foregroundColor:
-                            MaterialStateProperty.all(Colors.deepPurpleAccent)),
+                        foregroundColor: MaterialStateProperty.all(
+                      Color(0xff8098FE),
+                    )),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },

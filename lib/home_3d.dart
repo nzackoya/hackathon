@@ -37,6 +37,7 @@ class _Home3DState extends State<Home3D> {
               const Text('2023'),
               Expanded(
                   child: Slider(
+                activeColor: Color(0xff8098FE),
                 divisions: 6,
                 value: _currentSliderValue.toDouble(),
                 min: 2023,

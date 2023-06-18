@@ -90,10 +90,10 @@ class _HomeState extends State<Home> {
                     value: dropdownValue,
                     icon: const Icon(Icons.arrow_downward),
                     elevation: 16,
-                    style: const TextStyle(color: Colors.deepPurple),
+                    style: const TextStyle(color: Color(0xff8098FE)),
                     underline: Container(
                       height: 2,
-                      color: Colors.deepPurpleAccent,
+                      color: Color(0xff8098FE),
                     ),
                     onChanged: (String? value) {
                       // This is called when the user selects an item.
@@ -153,6 +153,7 @@ class _HomeState extends State<Home> {
               const Text('2023'),
               Expanded(
                   child: Slider(
+                activeColor: Color(0xff8098FE),
                 divisions: 27,
                 value: _currentSliderValue,
                 min: 2023,

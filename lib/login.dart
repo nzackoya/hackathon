@@ -49,7 +49,11 @@ class Login extends StatelessWidget {
                 width: 200,
                 height: 75,
                 child: TextField(
-                  decoration: InputDecoration(hintText: "Логин"),
+                  decoration: InputDecoration(
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xff8098FE)),
+                      ),
+                      hintText: "Логин"),
                 ),
               ),
               const SizedBox(
@@ -57,13 +61,18 @@ class Login extends StatelessWidget {
                 height: 75,
                 child: TextField(
                   obscureText: true,
-                  decoration: InputDecoration(hintText: "Пароль"),
+                  decoration: InputDecoration(
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xff8098FE)),
+                    ),
+                    hintText: "Пароль",
+                  ),
                 ),
               ),
               ElevatedButton(
                 style: ButtonStyle(
                     foregroundColor:
-                        MaterialStateProperty.all(Colors.deepPurpleAccent)),
+                        MaterialStateProperty.all(Color(0xff8098FE))),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
