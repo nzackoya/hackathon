@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:hack/add.dart';
 import 'package:latlong2/latlong.dart';
 import 'dart:math' as math;
 
@@ -47,6 +48,17 @@ class _HomeState extends State<Home> {
             zoom: 10,
           ),
           nonRotatedChildren: [
+            GestureDetector(
+              onLongPress: () {
+                showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) {
+                      return const Add();
+                    });
+              },
+            ),
             Align(
               alignment: Alignment.topRight,
               child: GestureDetector(
